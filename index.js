@@ -57,18 +57,19 @@ function hoursWorkedOnDate(empDetailsObj, date){
     // Capture timeIn record for the date of interest
     for (let record of empDetailsObj.timeInEvents){
         if (record.date === date){
-            timeIn = record.hour/100; //Did this the hard way to make tests pass
+            timeIn = record.hour; 
         }
     }
 
     // Capture timeOut record for the date of interest
     for (let record of empDetailsObj.timeOutEvents){
         if (record.date === date){
-            timeOut = record.hour/100; //Did this the hard way to make tests pass
+            timeOut = record.hour; 
         }
     }
 
-    return timeOut - timeIn;
+    //Did this the hard way to make tests pass
+    return (timeOut - timeIn) / 100;
 
 }
 
@@ -104,12 +105,18 @@ function allWagesFor(empDetailsObj){
 // calculatePayroll()
 function calculatePayroll(empDetailsArray){
     // Loop over all the employees
-    let totalEmployeeWages = 0;
+    // let totalEmployeeWages = 0;
 
-    for (let employee of empDetailsArray){
-        totalEmployeeWages += allWagesFor(employee);
-    }
+    // for (let employee of empDetailsArray){
+    //     totalEmployeeWages += allWagesFor(employee);
+    // }
+    //// Return the total amount owed
+    //return totalEmployeeWages;
 
-    // Return the total amount owed
-    return totalEmployeeWages;
+    // USING REDUCE()
+    // Sum up wages for all the employess
+    let totalEmployeesWages = empDetailsArray.reduce( (total, employee) => {
+        return total + allWagesFor(employee)
+    }, 0)
+    return totalEmployeesWages
 }
